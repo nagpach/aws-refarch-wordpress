@@ -6,10 +6,10 @@ You can launch this CloudFormation stack, using your account, in the following A
 
 | AWS Region Code | Name | Launch |
 | --- | --- | --- 
-| us-east-1 |US East (N. Virginia)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Production&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
-| us-east-2 |US East (Ohio)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Production&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
-| us-west-2 |US West (Oregon)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=Production&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
-| eu-west-1 |EU (Ireland)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Production&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
+| us-east-1 |US East (N. Virginia)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
+| us-east-2 |US East (Ohio)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
+| us-west-2 |US West (Oregon)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
+| eu-west-1 |EU (Ireland)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
 
 ## Overview
 
@@ -29,12 +29,12 @@ This set of templates deploys the following network design:
 | Item | CIDR Range | Usable IPs | Description |
 | --- | --- | --- | --- |
 | VPC | 10.0.0.0/16 | 65,536 | The whole range used for the VPC and all subnets |
-| App Subnet | 10.0.0.0/22 | 1022 | Private subnet in first Availability Zone |
-| App Subnet | 10.0.4.0/22 | 1022 | Private subnet in second Availability Zone |
-| App Subnet | 10.0.8.0/22 | 1022 | Private subnet in third Availability Zone (if available) |
-| DB Subnet | 10.0.12.0/22 | 1022 | Private subnet in first Availability Zone |
-| DB Subnet | 10.0.16.0/22 | 1022 | Private subnet in second Availability Zone |
-| DB Subnet | 10.0.20.0/22 | 1022 | Private subnet in third Availability Zone (if available) |
+| Application Subnet | 10.0.0.0/22 | 1022 | Private subnet in first Availability Zone |
+| Application Subnet | 10.0.4.0/22 | 1022 | Private subnet in second Availability Zone |
+| Application Subnet | 10.0.8.0/22 | 1022 | Private subnet in third Availability Zone (if available) |
+| Database Subnet | 10.0.12.0/22 | 1022 | Private subnet in first Availability Zone |
+| Database Subnet | 10.0.16.0/22 | 1022 | Private subnet in second Availability Zone |
+| Database Subnet | 10.0.20.0/22 | 1022 | Private subnet in third Availability Zone (if available) |
 | Web Subnet | 10.0.250.0/23 | 510 | Public subnet in first Availability Zone |
 | Web Subnet | 10.0.252.0/23 | 510 | Public subnet in second Availability Zone |
 | Web Subnet | 10.0.254.0/23 | 510 | Public subnet in third Availability Zone (if available) |
@@ -46,17 +46,17 @@ Mappings:
   SubnetConfig:
     VPC:
       "CIDR": "10.0.0.0/16"
-    AppSubnet0:
+    ApplicationSubnet0:
       "CIDR": "10.0.0.0/22"
-    AppSubnet1:
+    ApplicationSubnet1:
       "CIDR": "10.0.4.0/22"
-    AppSubnet2:
+    ApplicationSubnet2:
       "CIDR": "10.0.8.0/22"
-    DBSubnet0:
+    DatabaseSubnet0:
       "CIDR": "10.0.12.0/22"
-    DBSubnet1:
+    DatabaseSubnet1:
       "CIDR": "10.0.16.0/22"
-    DBSubnet2:
+    DatabaseSubnet2:
       "CIDR": "10.0.20.0/22"
     WebSubnet0:
       "CIDR": "10.0.250.0/23"
@@ -78,7 +78,7 @@ Where possible, please also [submit a pull request](https://help.github.com/arti
 
 ## License
 
-Copyright 2011-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
 
