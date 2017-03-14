@@ -29,15 +29,15 @@ This set of templates deploys the following network design:
 | Item | CIDR Range | Usable IPs | Description |
 | --- | --- | --- | --- |
 | VPC | 10.0.0.0/16 | 65,536 | The whole range used for the VPC and all subnets |
-| Application (Private) Subnet | 10.0.0.0/22 | 1022 | The private subnet in the first Availability Zone |
-| Application (Private) Subnet | 10.0.4.0/22 | 1022 | The private subnet in the second Availability Zone |
-| Application (Private) Subnet | 10.0.8.0/22 | 1022 | The private subnet in the third Availability Zone (if available) |
-| Database (Private) Subnet | 10.0.12.0/22 | 1022 | The private subnet in the first Availability Zone |
-| Database (Private) Subnet | 10.0.16.0/22 | 1022 | The private subnet in the second Availability Zone |
-| Database (Private) Subnet | 10.0.20.0/22 | 1022 | The private subnet in the third Availability Zone (if available) |
-| Web (Public) Subnet | 10.0.250.0/23 | 510 | The public subnet in the first Availability Zone |
-| Web (Public) Subnet | 10.0.252.0/23 | 510 | The public subnet in the second Availability Zone |
-| Web (Public) Subnet | 10.0.254.0/23 | 510 | The public subnet in the third Availability Zone (if available) |
+| App Subnet | 10.0.0.0/22 | 1022 | Private subnet in first Availability Zone |
+| App Subnet | 10.0.4.0/22 | 1022 | Private subnet in second Availability Zone |
+| App Subnet | 10.0.8.0/22 | 1022 | Private subnet in third Availability Zone (if available) |
+| DB Subnet | 10.0.12.0/22 | 1022 | Private subnet in first Availability Zone |
+| DB Subnet | 10.0.16.0/22 | 1022 | Private subnet in second Availability Zone |
+| DB Subnet | 10.0.20.0/22 | 1022 | Private subnet in third Availability Zone (if available) |
+| Web Subnet | 10.0.250.0/23 | 510 | Public subnet in first Availability Zone |
+| Web Subnet | 10.0.252.0/23 | 510 | Public subnet in second Availability Zone |
+| Web Subnet | 10.0.254.0/23 | 510 | Public subnet in third Availability Zone (if available) |
 
 You can adjust the CIDR ranges used in this section of the [aws-refarch-wordpress-newvpc.yaml](/templates/aws-refarch-wordpress-newvpc.yaml) template:
 
@@ -46,17 +46,17 @@ Mappings:
   SubnetConfig:
     VPC:
       "CIDR": "10.0.0.0/16"
-    ApplicationSubnet0:
+    AppSubnet0:
       "CIDR": "10.0.0.0/22"
-    ApplicationSubnet1:
+    AppSubnet1:
       "CIDR": "10.0.4.0/22"
-    ApplicationSubnet2:
+    AppSubnet2:
       "CIDR": "10.0.8.0/22"
-    DatabaseSubnet0:
+    DBSubnet0:
       "CIDR": "10.0.12.0/22"
-    DatabaseSubnet1:
+    DBSubnet1:
       "CIDR": "10.0.16.0/22"
-    DatabaseSubnet2:
+    DBSubnet2:
       "CIDR": "10.0.20.0/22"
     WebSubnet0:
       "CIDR": "10.0.250.0/23"
