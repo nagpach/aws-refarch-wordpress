@@ -13,6 +13,6 @@ You can launch this CloudFormation stack, using your account, in the following A
 
 ## Overview
 
-![architecture-overview](aws-refarch-wordpress.pdf)
+![architecture-overview](images/aws-refarch-wordpress.jpg)
 
 The repository consists of a set of nested templates that deploy the following:
