@@ -12,3 +12,7 @@ You can launch this CloudFormation stack, using your account, in the following A
 | eu-west-1 |EU (Ireland)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=Production&templateURL=https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-master.yaml) |
 
 ## Overview
+
+![architecture-overview](aws-refarch-wordpress.pdf)
+
+The repository consists of a set of nested templates that deploy the following:
