@@ -22,7 +22,49 @@ The repository consists of a set of nested templates that deploy the following:
 
 
 
+### Change the VPC or subnet IP ranges
 
+This set of templates deploys the following network design:
+
+| Item | CIDR Range | Usable IPs | Description |
+| --- | --- | --- | --- |
+| VPC | 10.0.0.0/16 | 65,536 | The whole range used for the VPC and all subnets |
+| Application (Private) Subnet | 10.0.0.0/22 | 1022 | The private subnet in the first Availability Zone |
+| Application (Private) Subnet | 10.0.4.0/22 | 1022 | The private subnet in the second Availability Zone |
+| Application (Private) Subnet | 10.0.8.0/22 | 1022 | The private subnet in the third Availability Zone (if available) |
+| Database (Private) Subnet | 10.0.12.0/22 | 1022 | The private subnet in the first Availability Zone |
+| Database (Private) Subnet | 10.0.16.0/22 | 1022 | The private subnet in the second Availability Zone |
+| Database (Private) Subnet | 10.0.20.0/22 | 1022 | The private subnet in the third Availability Zone (if available) |
+| Web (Public) Subnet | 10.0.250.0/23 | 510 | The public subnet in the first Availability Zone |
+| Web (Public) Subnet | 10.0.252.0/23 | 510 | The public subnet in the second Availability Zone |
+| Web (Public) Subnet | 10.0.254.0/23 | 510 | The public subnet in the third Availability Zone (if available) |
+
+You can adjust the CIDR ranges used in this section of the [aws-refarch-wordpress-newvpc.yaml](/templates/aws-refarch-wordpress-newvpc.yaml) template:
+
+```
+Mappings:
+  SubnetConfig:
+    VPC:
+      "CIDR": "10.0.0.0/16"
+    ApplicationSubnet0:
+      "CIDR": "10.0.0.0/22"
+    ApplicationSubnet1:
+      "CIDR": "10.0.4.0/22"
+    ApplicationSubnet2:
+      "CIDR": "10.0.8.0/22"
+    DatabaseSubnet0:
+      "CIDR": "10.0.12.0/22"
+    DatabaseSubnet1:
+      "CIDR": "10.0.16.0/22"
+    DatabaseSubnet2:
+      "CIDR": "10.0.20.0/22"
+    WebSubnet0:
+      "CIDR": "10.0.250.0/23"
+    WebSubnet1:
+      "CIDR": "10.0.252.0/23"
+    WebSubnet2:
+      "CIDR": "10.0.254.0/23"
+```
 
 ### Add a new item to this list
 
