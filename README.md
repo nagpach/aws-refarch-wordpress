@@ -16,3 +16,30 @@ You can launch this CloudFormation stack, using your account, in the following A
 ![architecture-overview](images/aws-refarch-wordpress.jpg)
 
 The repository consists of a set of nested templates that deploy the following:
+
+
+
+
+
+
+
+
+### Add a new item to this list
+
+If you found yourself wishing this set of frequently asked questions had an answer for a particular problem, please [submit a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/). The chances are that others will also benefit from having the answer listed here.
+
+## Contributing
+
+Please [create a new GitHub issue](https://github.com/darrylsosborne/aws-refarch-wordpress/issues/new) for any feature requests, bugs, or documentation improvements. 
+
+Where possible, please also [submit a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) for the change. 
+
+## License
+
+Copyright 2011-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
+
+[http://aws.amazon.com/apache2.0/](http://aws.amazon.com/apache2.0/)
+
+or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
