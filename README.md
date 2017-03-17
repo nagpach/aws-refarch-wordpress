@@ -17,7 +17,7 @@ You can launch this CloudFormation stack, using your account, in the following A
 
 The repository consists of a set of nested templates which are run in order from the master template. Run the master template to create the entire stack, entering the appropriate parameters. Nested templates can be run individually in order, entering the appropriate input parameters for each template.
 
-### Steps to Run
+## Steps to Run
 To launch the entire stack and deploy a WordPress site on AWS, click on one of the ***Launch Stack*** links above or download the Master template and launch it locally.
 
 #### Optional: Amazon Certificate Manager SSL/TLS Certificates
@@ -27,11 +27,11 @@ AWS Certificate Manager (ACM) is a service that lets you easily provision, manag
 If you don't already have an SSL/TLS certificate for your domain name, it is recommended that you request one using ACM. For more information about requesting an SSL/TLS certificate using ACM, please read the [AWS Certificate Manager User Guide](http://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
 
 
-### Master Template
+## Master Template
 The master template receives all input parameters and passes them to the appropriate nested template which are executed in order based on dependencies.
 Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refarch-wordpress-master.yaml)
 
-#### AWS Resources Created:
+### AWS Resources Created:
 
 - Amazon Virtual Private Cloud (Amazon VPC)
 - Internet Gateway (IGW)
@@ -49,13 +49,13 @@ Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refar
 - Amazon CloudFront distribution (optional)
 - Amazon Route53 DNS record set (optional)
 
-#### Input Parameters
+### Input Parameters
 
-##### AWS Parameters
+#### AWS Parameters
 - EC2 Key Name Pair
 - SSH Access CIDR block (to access bastion host)
 
-##### Database Parameters
+#### Database Parameters
 - Database Name
 - Database Master Username
 - Database Master Password
@@ -64,12 +64,12 @@ Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refar
 - Create ElastiCache cluster (boolean)
 - ElastiCache Node Type
 
-##### Web Parameters
+#### Web Parameters
 - Create CloudFront distribution (boolean)
 - Create Route 53 record set (boolean)
 - Web Instance Type
 
-##### WordPress Parameters
+#### WordPress Parameters
 - CloudFront ACM certificate ARN (must be requested from us-east-1)
 - ELB ACM certificate ARN (must be requested from the stack region)
 - WordPress Title
@@ -81,14 +81,14 @@ Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refar
 
 
 
-### Master Template
+## Master Template
 The master template receives all input parameters and passes them to the appropriate nested template which are executed in order based on dependencies.
 Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refarch-wordpress-master.yaml)
 
-### New VPC Template
+## New VPC Template
 Review the template here [aws-refarch-wordpress-01-newvpc.yaml](templates/aws-refarch-wordpress-01-newvpc.yaml)
 
-#### VPC and subnet IP ranges
+### VPC and subnet IP ranges
 
 The 'newvpc' stack creates the following network design:
 
@@ -132,34 +132,39 @@ Mappings:
       "CIDR": "10.0.254.0/23"
 ```
 
-### Security Groups Template
+## Security Groups Template
 Review the template here [aws-refarch-wordpress-02-securitygroups.yaml](templates/aws-refarch-wordpress-02-securitygroups.yaml)
 
-### Bastion Template
+## Bastion Template
 Review the template here [aws-refarch-wordpress-03-bastion.yaml](templates/aws-refarch-wordpress-03-bastion.yaml)
 
-### Amazon EFS Template
+## Amazon EFS Template
 Review the template here [aws-refarch-wordpress-03-efs.yaml](templates/aws-refarch-wordpress-03-efs.yaml)
 
-### Amazon ElastiCache Template
+## Amazon ElastiCache Template
 Review the template here [aws-refarch-wordpress-03-elasticache.yaml](templates/aws-refarch-wordpress-03-elasticache.yaml)
 
-### Amazon Elastic Load Balancing Template
+## Amazon Elastic Load Balancing Template
 Review the template here [aws-refarch-wordpress-03-publicelb.yaml](templates/aws-refarch-wordpress-03-publicelb.yaml)
 
-### Amazon RDS Template
+## Amazon RDS Template
 Review the template here [aws-refarch-wordpress-03-rds.yaml](templates/aws-refarch-wordpress-03-rds.yaml)
 
-### Amazon CloudFront Template
+## Amazon CloudFront Template
 Review the template here [aws-refarch-wordpress-04-cloudfront.yaml](templates/aws-refarch-wordpress-04-cloudfront.yaml)
 
-### WordPress Web Template
+## WordPress Web Template
 Review the template here [aws-refarch-wordpress-04-web.yaml](templates/aws-refarch-wordpress-04-web.yaml)
 
-### Amazon Route 53 Template
+## Amazon Route 53 Template
 Review the template here [aws-refarch-wordpress-05-route53.yaml](templates/aws-refarch-wordpress-05-route53.yaml)
 
 
-### Add a new item to this list
+## Add a new item to this list
 
 If you found yourself wishing this set of frequently asked questions had an answer for a particular problem, please [submit a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/). The chances are that others will also benefit from having the answer listed here.
+
+
+## License
+
+This reference architecture sample is licensed under Apache 2.0.
