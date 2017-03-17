@@ -18,7 +18,7 @@ You can launch this CloudFormation stack, using your account, in the following A
 The repository consists of a set of nested templates which are run in order from the master template. Run the master template to create the entire stack, entering the appropriate parameters. Nested templates can be run individually in order, entering the appropriate input parameters for each template.
 
 ### Steps to Run
-To launch the entire stack and deploy a WordPress site on AWS, click on one of the Launch links above or download the Master template and launch it locally.
+To launch the entire stack and deploy a WordPress site on AWS, click on one of the ***Launch Stack*** links above or download the Master template and launch it locally.
 
 #### Optional: Amazon Certificate Manager SSL/TLS Certificates
 
