@@ -17,14 +17,15 @@ You can launch this CloudFormation stack, using your account, in the following A
 
 The repository consists of a set of nested templates which are run in order from the master template. Run the master template to create the entire stack, entering the appropriate parameters. Nested templates can be run individually in order, entering the appropriate input parameters for each template.
 
-### Optional: Amazon Certificate Manager SSL/TLS Certificates
+### Steps to Run
+To launch the entire stack and deploy a WordPress site on AWS, click on one of the Launch links above or download the Master template and launch it locally.
+
+#### Optional: Amazon Certificate Manager SSL/TLS Certificates
 
 AWS Certificate Manager (ACM) is a service that lets you easily provision, manage, and deploy Secure Sockets Layer/Transport Layer Security (SSL/TLS) certificates for use with AWS services. SSL/TLS certificates provisioned through AWS Certificate Manager are free.
 
 If you don't already have an SSL/TLS certificate for your domain name, it is recommended that you request one using ACM. For more information about requesting an SSL/TLS certificate using ACM, please read the [AWS Certificate Manager User Guide](http://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
 
-### Steps to Run
-To launch the entire stack and deploy a WordPress site on AWS, click on one of the Launch links above or download the Master template and launch it locally.
 
 ### Master Template
 The master template receives all input parameters and passes them to the appropriate nested template which are executed in order based on dependencies.
@@ -51,32 +52,32 @@ Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refar
 #### Input Parameters
 
 ##### AWS Parameters
-EC2 Key Name Pair
-SSH Access CIDR block (to access bastion host)
+- EC2 Key Name Pair
+- SSH Access CIDR block (to access bastion host)
 
 ##### Database Parameters
-Database Name
-Database Master Username
-Database Master Password
-Database Size
-Database Instance Class Type
-Create ElastiCache cluster (boolean)
-ElastiCache Node Type
+- Database Name
+- Database Master Username
+- Database Master Password
+- Database Size
+- Database Instance Class Type
+- Create ElastiCache cluster (boolean)
+- ElastiCache Node Type
 
 ##### Web Parameters
-Create CloudFront distribution (boolean)
-Create Route 53 record set (boolean)
-Web Instance Type
+- Create CloudFront distribution (boolean)
+- Create Route 53 record set (boolean)
+- Web Instance Type
 
 ##### WordPress Parameters
-CloudFront ACM certificate ARN (must be requested from us-east-1)
-ELB ACM certificate ARN (must be requested from the stack region)
-WordPress Title
-WordPress Administrator Username
-WordPress Administrator Username Password
-WordPress Administrator Email Address
-WordPress Site Domain Name (e.g. 'example.com')
-WordPress Main Language of the site
+- CloudFront ACM certificate ARN (must be requested from us-east-1)
+- ELB ACM certificate ARN (must be requested from the stack region)
+- WordPress Title
+- WordPress Administrator Username
+- WordPress Administrator Username Password
+- WordPress Administrator Email Address
+- WordPress Site Domain Name (e.g. 'example.com')
+- WordPress Main Language of the site
 
 
 
