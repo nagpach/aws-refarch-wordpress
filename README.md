@@ -114,7 +114,7 @@ The 'newvpc' stack creates the following network design:
 | Public Subnet | 10.0.252.0/23 | 510 | Public subnet in second Availability Zone |
 | Public Subnet | 10.0.254.0/23 | 510 | Public subnet in third Availability Zone (if available) |
 
-You can adjust the CIDR ranges used in this section of the [aws-refarch-wordpress-newvpc.yaml](/templates/aws-refarch-wordpress-newvpc.yaml) template:
+You can adjust the CIDR ranges used in this section of the [aws-refarch-wordpress-01-newvpc.yaml](/templates/aws-refarch-wordpress-01-newvpc.yaml) template:
 
 ```
 Mappings:
