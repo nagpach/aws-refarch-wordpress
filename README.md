@@ -15,7 +15,11 @@ You can launch this CloudFormation stack, using your account, in the following A
 
 ![architecture-overview](images/aws-refarch-wordpress.jpg)
 
-The repository consists of a set of nested templates which are run in order from the master template. Run the master template to create the entire stack, entering the appropriate parameters. Nested templates can be run individually in order, entering the appropriate input parameters for each template.
+The repository consists of a set of nested templates which are run in order from the master template. Run the master template to create the entire stack, entering the appropriate parameters. Nested templates can be run individually in order, entering the appropriate input parameters for each stack.
+
+
+
+
 
 ## Steps to Run
 To launch the entire stack and deploy a WordPress site on AWS, click on one of the ***Launch Stack*** links above or download the Master template and launch it locally.
@@ -26,9 +30,14 @@ AWS Certificate Manager (ACM) is a service that lets you easily provision, manag
 
 If you don't already have an SSL/TLS certificate for your domain name, it is recommended that you request one using ACM. For more information about requesting an SSL/TLS certificate using ACM, please read the [AWS Certificate Manager User Guide](http://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html).
 
+Use ACM to request a certificate or import a certificate into ACM. To use an ACM certificate with CloudFront (optional input parameter), you must request or import the certificate in the US East (N. Virginia) region. To use an ACM certificate with Amazon ELB (optional input parameter), you must request or import the certificate in the region you create the CloudFormation stack. After you validate ownership of the domain names in your certificate, ACM provisions the certificate. Use the ACM certificate Amazon Resource Name (ARN) as the optional Cloudfront and/or Public ELB ACM certificate input parameters of the master template.
+
+#### Stack Completion Validation
+
+
 
 ## Master Template
-The master template receives all input parameters and passes them to the appropriate nested template which are executed in order based on dependencies.
+The master template receives all input parameters and passes them to the appropriate nested template which are executed in order based on conditions and dependencies.
 Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refarch-wordpress-master.yaml)
 
 ### AWS Resources Created:
