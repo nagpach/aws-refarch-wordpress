@@ -1,0 +1,150 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Reference Architecture to host WordPress on AWS - Creates ELB classic load balancer
+
+Metadata:
+
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    - Label:
+        default: ELB Parameters
+      Parameters:
+        - PublicElbAcmCertificate
+        - PublicElbSecurityGroup
+        - PublicSubnet0
+        - PublicSubnet1
+        - PublicSubnet2
+    ParameterLabels:
+      PublicElbAcmCertificate:
+        default: ELB Certificate ARN
+      PublicElbSecurityGroup:
+        default: Public ELB Security Group
+      PublicSubnet0:
+        default: Public Subnet for AZ 0
+      PublicSubnet1:
+        default: Public Subnet for AZ 1
+      PublicSubnet2:
+        default: Public Subnet for AZ 2
+
+Parameters:
+
+  PublicElbAcmCertificate:
+    AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
+    Description: '[ Optional ] The AWS Certification Manager Certificate ARN of certificate for the ELB - this certificate should be created in the region you wish to run the ELB.'
+    Type: String
+  PublicElbSecurityGroup:
+    Description: Select the ELB security group.
+    Type: AWS::EC2::SecurityGroup::Id
+  PublicSubnet0:
+    Description: Select an existing public subnet for AZ 0.
+    Type: AWS::EC2::Subnet::Id
+  PublicSubnet1:
+    Description: Select an existing public subnet for AZ 1.
+    Type: AWS::EC2::Subnet::Id
+  PublicSubnet2:
+    Description: Select an existing public subnet for AZ 2.
+    Type: AWS::EC2::Subnet::Id
+
+Conditions:
+
+  SslCertificate:
+    !Not [!Equals [ '', !Ref PublicElbAcmCertificate ] ]
+  NoSslCertificate:
+    !Equals [ '', !Ref PublicElbAcmCertificate ]
+  MoreThan3AZ:
+    !Or [
+      !Equals [ !Ref 'AWS::Region', ap-southeast-2 ],
+      !Equals [ !Ref 'AWS::Region', eu-west-1 ],
+      !Equals [ !Ref 'AWS::Region', sa-east-1 ],
+      !Equals [ !Ref 'AWS::Region', us-east-1 ],
+      !Equals [ !Ref 'AWS::Region', us-west-2 ],
+      !Equals [ !Ref 'AWS::Region', us-east-2 ]
+    ]
+
+Resources:
+
+  PublicElbNoSslCertificate:
+    Condition: NoSslCertificate
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      ConnectionDrainingPolicy:
+        Enabled: true
+        Timeout: 60
+      CrossZone: true
+      HealthCheck:
+        Target: HTTP:80/
+        HealthyThreshold: 3
+        UnhealthyThreshold: 5
+        Interval: 30
+        Timeout: 5
+      Listeners:
+        - InstancePort: 80
+          LoadBalancerPort: 80
+          Protocol: HTTP
+      SecurityGroups:
+      - !Ref PublicElbSecurityGroup
+      Scheme: internet-facing
+      Subnets:
+        !If [
+          MoreThan3AZ,
+          [ !Ref PublicSubnet0, !Ref PublicSubnet1, !Ref PublicSubnet2 ],
+          [ !Ref PublicSubnet0, !Ref PublicSubnet1 ]
+        ]
+      Tags:
+        - Key: Name
+          Value: !Join [ '', [ Public ELB / , !Ref 'AWS::StackName' ] ]
+
+  PublicElbSslCertificate:
+    Condition: SslCertificate
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      ConnectionDrainingPolicy:
+        Enabled: true
+        Timeout: 60
+      CrossZone: true
+      HealthCheck:
+        Target: HTTP:80/
+        HealthyThreshold: 3
+        UnhealthyThreshold: 5
+        Interval: 30
+        Timeout: 5
+      Listeners:
+        - InstancePort: 80
+          LoadBalancerPort: 80
+          Protocol: HTTP
+        - InstancePort: 80
+          InstanceProtocol: HTTP
+          LoadBalancerPort: 443
+          Protocol: HTTPS
+          SSLCertificateId: !Ref PublicElbAcmCertificate
+      SecurityGroups:
+      - !Ref PublicElbSecurityGroup
+      Scheme: internet-facing
+      Subnets:
+        !If [
+          MoreThan3AZ,
+          [ !Ref PublicSubnet0, !Ref PublicSubnet1, !Ref PublicSubnet2 ],
+          [ !Ref PublicSubnet0, !Ref PublicSubnet1 ]
+        ]
+      Tags:
+        - Key: Name
+          Value: !Join [ '', [ Public ELB / , !Ref 'AWS::StackName' ] ]
+
+Outputs:
+
+  PublicElb:
+    Value:
+      !If [ NoSslCertificate, !Ref PublicElbNoSslCertificate, !Ref PublicElbSslCertificate ]
+  PublicElbCanonicalHostedZoneNameId:
+    Value:
+      !If [ NoSslCertificate, !GetAtt PublicElbNoSslCertificate.CanonicalHostedZoneNameID, !GetAtt PublicElbSslCertificate.CanonicalHostedZoneNameID ]
+  PublicElbDnsName:
+    Value:
+      !If [ NoSslCertificate, !GetAtt PublicElbNoSslCertificate.DNSName, !GetAtt PublicElbSslCertificate.DNSName ]
+  PublicElbHostname:
+    Value:
+      !If [ NoSslCertificate, !Join [ '', [ 'http://', !GetAtt PublicElbNoSslCertificate.DNSName ] ], !Join [ '', [ 'https://', !GetAtt PublicElbSslCertificate.DNSName ] ] ]
+  SslCertificate:
+    Value:
+      !If [ SslCertificate, True, False ]
