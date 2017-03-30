@@ -61,7 +61,7 @@ Resources:
       MapPublicIpOnLaunch: "false"
       Tags:
         - Key: "Name"
-          Value: !Join [ '', [ "WebSubnet1 / ", !Ref "AWS::StackName" ] ]
+          Value: !Join [ '', [ 'WebSubnet1 / ', !Ref "AWS::StackName" ] ]
         - Key: "SubnetType"
           Value: "Private"
       VpcId: !Ref Vpc
@@ -74,7 +74,7 @@ Resources:
       MapPublicIpOnLaunch: "false"
       Tags:
         - Key: "Name"
-          Value: !Join [ '', [ "WebSubnet2 / ", !Ref "AWS::StackName" ] ]
+          Value: !Join [ '', [ 'WebSubnet2 / ', !Ref "AWS::StackName" ] ]
         - Key: "SubnetType"
           Value: "Private"
       VpcId: !Ref Vpc

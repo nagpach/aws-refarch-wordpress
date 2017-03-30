@@ -108,7 +108,7 @@ Resources:
         ]
       Tags:
         - Key: Name
-          Value: !Join [ '', [ WordPress / , !Ref 'AWS::StackName' ] ]
+          Value: !Join [ '', [ 'WordPress / ', !Ref 'AWS::StackName' ] ]
       VpcSecurityGroupIds:
       - !Ref ElastiCacheSecurityGroup       
   ElastiCacheSubnetGroup: 

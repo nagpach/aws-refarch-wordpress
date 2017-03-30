@@ -76,10 +76,10 @@ Resources:
           ToPort: 2049
           SourceSecurityGroupId: !Ref WebSecurityGroup
 
-  PublicElbSecurityGroup:
+  PublicAlbSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Security group for ELB
+      GroupDescription: Security group for ALB
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 443
@@ -100,11 +100,11 @@ Resources:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
-          SourceSecurityGroupId: !Ref PublicElbSecurityGroup
+          SourceSecurityGroupId: !Ref PublicAlbSecurityGroup
         - IpProtocol: tcp
           FromPort: 443
           ToPort: 443
-          SourceSecurityGroupId: !Ref PublicElbSecurityGroup
+          SourceSecurityGroupId: !Ref PublicAlbSecurityGroup
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
@@ -121,7 +121,7 @@ Outputs:
     Value: !Ref EfsSecurityGroup
   ElastiCacheSecurityGroup:
     Value: !Ref ElastiCacheSecurityGroup
-  PublicElbSecurityGroup:
-    Value: !Ref PublicElbSecurityGroup
+  PublicAlbSecurityGroup:
+    Value: !Ref PublicAlbSecurityGroup
   WebSecurityGroup:
     Value: !Ref WebSecurityGroup

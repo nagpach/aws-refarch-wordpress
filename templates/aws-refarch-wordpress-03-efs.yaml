@@ -57,7 +57,7 @@ Resources:
     Properties:
       FileSystemTags:
         - Key: Name
-          Value: !Join [ '', [ WordPress / , !Ref 'AWS::StackName' ] ]
+          Value: !Join [ '', [ 'WordPress / ', !Ref 'AWS::StackName' ] ]
       PerformanceMode: generalPurpose
   ElasticFileSystemMountTarget0:
     Type: AWS::EFS::MountTarget

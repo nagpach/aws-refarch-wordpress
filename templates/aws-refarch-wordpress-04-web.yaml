@@ -18,8 +18,8 @@ Metadata:
         - WebSubnet0
         - WebSubnet1
         - WebSubnet2
-        - PublicElb
-        - PublicElbHostname
+        - PublicAlbTargetGroupArn
+        - PublicAlbHostname
         - SslCertificate
     - Label:
         default: WordPress Parameters
@@ -55,12 +55,12 @@ Metadata:
         default: EFS File System
       KeyName:
         default: Existing Key Pair
-      PublicElb:
-        default: Public Elb
-      PublicElbHostname:
-        default: Public Elb Hostname
+      PublicAlbTargetGroupArn:
+        default: Public Alb Target Group Arn
+      PublicAlbHostname:
+        default: Public Alb Hostname
       SslCertificate:
-        default: ACM Cert attached to Public Elb
+        default: ACM Cert attached to Public Alb
       WebAsgMax:
         default: Web ASG Max
       WebAsgMin:
@@ -119,22 +119,22 @@ Parameters:
     Description: The Amazon EFS file system id.
     Type: String
   KeyName:
-    AllowedPattern: ^([a-zA-Z0-9 @`~!#$%^&*()_+,\\-])*$
+    AllowedPattern: ^([a-zA-Z0-9 @.`~!#$%^&*()_+,\\-])*$
     ConstraintDescription: Must be letters (upper or lower), numbers, and special characters.
     Description: Name of an EC2 KeyPair. Your bastion & Web instances will launch with this KeyPair.
     Type: AWS::EC2::KeyPair::KeyName
-  PublicElb:
-    Description: The public ELB logical id.
+  PublicAlbTargetGroupArn:
+    Description: The public application load balancer target group arn.
     Type: String
-  PublicElbHostname:
-    Description: The hostname of the public ELB http form (e.g. http://abdc-12345-xyz.<region>.elb.amazonaws.com)
+  PublicAlbHostname:
+    Description: The hostname of the public ALB http form (e.g. http://abdc-12345-xyz.<region>.elb.amazonaws.com)
     Type: String
   SslCertificate:
     AllowedValues:
       - True
       - False
     Default: False
-    Description: Is there an ACM SSL Certificate attached to the Public Elb?
+    Description: Is there an ACM SSL Certificate attached to the Public Alb?
     Type:
       String
   WebAsgMax:
@@ -205,7 +205,7 @@ Parameters:
     Type: String
   WPDomainName:
     AllowedPattern: ^$|(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$
-    Description: '[ Optional ] The main domain name of the WordPress site (e.g. example.com). Leave empty to use the ELB DNS name for the WordPress site.'
+    Description: '[ Optional ] The main domain name of the WordPress site (e.g. example.com). Leave empty to use the ALB DNS name for the WordPress site.'
     Type: String
   WPLocale:
     Description: The main language of the WordPress site, as per https://codex.WordPress.org/Installing_WordPress_in_Your_Language. The default is 'en_GB'.
@@ -305,14 +305,14 @@ Resources:
       HealthCheckGracePeriod: 120
       HealthCheckType: EC2
       LaunchConfigurationName: !Ref WebLaunchConfiguration
-      LoadBalancerNames:
-        - !Ref PublicElb
       MaxSize: !Ref WebAsgMax
       MinSize: !Ref WebAsgMin
       Tags:
         - Key: Name
-          Value: !Join [ '', [ Web ASG / , !Ref 'AWS::StackName' ] ]
+          Value: !Join [ '', [ 'Web ASG / ', !Ref 'AWS::StackName' ] ]
           PropagateAtLaunch: true
+      TargetGroupARNs:
+        - !Ref PublicAlbTargetGroupArn
       VPCZoneIdentifier:
         !If [
           MoreThan3AZ,
@@ -429,11 +429,11 @@ Resources:
                     "\n",
                     "   cd /var/www/wordpress/", !Ref WPDirectory, "\n",
                     "   # install wordpress if not installed\n",
-                    "   # use public elb host name if wp domain name was empty\n",
+                    "   # use public alb host name if wp domain name was empty\n",
                     "   if ! $(wp core is-installed --allow-root); then\n",
                     "       wp core download --locale='", !Ref WPLocale, "' --allow-root\n",  
                     "       wp core config --dbname='", !Ref DatabaseName, "' --dbuser='", !Ref DatabaseMasterUsername, "' --dbpass='", !Ref DatabaseMasterPassword, "' --dbhost='", !Ref DatabaseClusterEndpointAddress, "' --dbprefix=wp_ --allow-root\n",
-                    "       wp core install --url=", !If [ NoWPDomainName, !Ref PublicElbHostname, !Join [ "", [ "'http://www.", !Ref WPDomainName, "'" ] ] ], " --title='", !Ref WPTitle, "' --admin_user='", !Ref WPAdminUsername, "' --admin_password='", !Ref WPAdminPassword, "' --admin_email='", !Ref WPAdminEmail, "' --skip-email --allow-root\n",
+                    "       wp core install --url=", !If [ NoWPDomainName, !Ref PublicAlbHostname, !Join [ "", [ "'http://www.", !Ref WPDomainName, "'" ] ] ], " --title='", !Ref WPTitle, "' --admin_user='", !Ref WPAdminUsername, "' --admin_password='", !Ref WPAdminPassword, "' --admin_email='", !Ref WPAdminEmail, "' --skip-email --allow-root\n",
                     "       sed -i \"/$table_prefix = 'wp_';/ a \\define('WP_HOME', 'http://' . \\$_SERVER['HTTP_HOST']); \" /var/www/wordpress/", !Ref WPDirectory, "/wp-config.php\n",
                     "       sed -i \"/$table_prefix = 'wp_';/ a \\define('WP_SITEURL', 'http://' . \\$_SERVER['HTTP_HOST']); \" /var/www/wordpress/", !Ref WPDirectory, "/wp-config.php\n",
                     "       # enable HTTPS in wp-config.php if ACM Public SSL Certificate parameter was not empty\n",
@@ -503,4 +503,4 @@ Resources:
 Outputs:
 
   Opcachestatus:
-    Value: !Join [ '', [ !Ref PublicElbHostname, '/opcache-instanceid.php' ] ]
+    Value: !Join [ '', [ !Ref PublicAlbHostname, '/opcache-instanceid.php' ] ]

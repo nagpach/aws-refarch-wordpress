@@ -30,7 +30,7 @@ Parameters:
     Description: Select the bastion security group.
     Type: AWS::EC2::SecurityGroup::Id
   KeyName:
-    AllowedPattern: ^([a-z0-9A-Z @`~!#$%^&*()_+,\\-])*$
+    AllowedPattern: ^([a-zA-Z0-9 @.`~!#$%^&*()_+,\\-])*$
     ConstraintDescription: Must be letters (upper or lower), numbers, and special characters.
     Description: Name of an EC2 KeyPair. Your bastion instances will launch with this KeyPair.
     Type: AWS::EC2::KeyPair::KeyName
@@ -101,7 +101,7 @@ Resources:
       MinSize: 0
       Tags:
         - Key: Name
-          Value: !Join [ '', [ Bastion / , !Ref 'AWS::StackName' ] ]
+          Value: !Join [ '', [ 'Bastion / ', !Ref 'AWS::StackName' ] ]
           PropagateAtLaunch: true
       VPCZoneIdentifier:
         !If [

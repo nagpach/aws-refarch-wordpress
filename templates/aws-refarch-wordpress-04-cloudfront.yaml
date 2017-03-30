@@ -12,12 +12,12 @@ Metadata:
       Parameters:
         - CloudFrontAcmCertificate
         - WPDomainName
-        - PublicElbDnsName
+        - PublicAlbDnsName
     ParameterLabels:
       CloudFrontAcmCertificate:
         default: CloudFront Certificate ARN
-      PublicElbDnsName:
-        default: Public ELB DNS Name
+      PublicAlbDnsName:
+        default: Public ALB DNS Name
       WPDomainName:
         default: Domain name of the WordPress site
 
@@ -27,8 +27,8 @@ Parameters:
     AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
     Description: '[ Optional ] The AWS Certification Manager Certificate ARN of certificate for the CloudFront distribution - this certificate should be created in the us-east-1 (N. Virginia) region.'
     Type: String
-  PublicElbDnsName:
-    Description: The Public ELB DNS name.
+  PublicAlbDnsName:
+    Description: The public application load balancer dns name.
     Type: String
   WPDomainName:
     AllowedPattern: ^$|(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$
@@ -54,7 +54,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-        - !If [ WPDomainName, !Join [ '', [ '*.', !Ref WPDomainName ] ], !Ref "AWS::NoValue" ]
+        - !If [ WPDomainName, !Join [ '', [ '*.', !Ref WPDomainName ] ], !Ref 'AWS::NoValue' ]
         CacheBehaviors:
         - PathPattern: wp-includes/*
           AllowedMethods:
@@ -94,7 +94,7 @@ Resources:
           TargetOriginId: elb
           ViewerProtocolPolicy: allow-all
           Compress: true
-        Comment: !Ref "AWS::StackName"
+        Comment: !Ref 'AWS::StackName'
         DefaultCacheBehavior:
           AllowedMethods:
           - DELETE
@@ -118,7 +118,7 @@ Resources:
           Compress: true
         Enabled: true
         Origins:
-        - DomainName: !Ref PublicElbDnsName
+        - DomainName: !Ref PublicAlbDnsName
           Id: elb
           CustomOriginConfig:
             OriginProtocolPolicy: http-only
@@ -129,7 +129,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-        - !If [ WPDomainName, !Join [ '', [ '*.', !Ref WPDomainName ] ], !Ref "AWS::NoValue" ]
+        - !If [ WPDomainName, !Join [ '', [ '*.', !Ref WPDomainName ] ], !Ref 'AWS::NoValue' ]
         CacheBehaviors:
         - PathPattern: wp-includes/*
           AllowedMethods:
@@ -169,7 +169,7 @@ Resources:
           TargetOriginId: elb
           ViewerProtocolPolicy: redirect-to-https
           Compress: true
-        Comment: !Ref "AWS::StackName"
+        Comment: !Ref 'AWS::StackName'
         DefaultCacheBehavior:
           AllowedMethods:
           - DELETE
@@ -193,7 +193,7 @@ Resources:
           Compress: true
         Enabled: true
         Origins:
-        - DomainName: !Ref PublicElbDnsName
+        - DomainName: !Ref PublicAlbDnsName
           Id: elb
           CustomOriginConfig:
             OriginProtocolPolicy: https-only
