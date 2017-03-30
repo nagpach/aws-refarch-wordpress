@@ -33,9 +33,11 @@ Use ACM to request a certificate or import a certificate into ACM. To use an ACM
 
 There are two output URLs for the master template. The WPSiteURL will take you to your new WordPress site. It will be the site domain name if you provided one, the CloudFront URL if you chose to create a CloudFront distribution, or the domain name of the public application load balancer.  The second output URL will take you to the OpCache Status page for each EC2 instance in the AutoScaling group. By refreshing the page you will be able to verify OpCache has been enabled on each instance.
 
-OpCache is a bytecode cache engine running on each EC2 instance that caches precompiled PHP scripts that boosts performance of PHP applications like WordPress. It is recommended to use a caching engine like OpCache when serving PHP pages for a website from Amazon EFS.  OpCache can be configured to store it's cache in memory or on EBS volumes. 
+#### OpCache
 
+OpCache is a byte-code cache engine running on each EC2 instance that caches precompiled PHP scripts that boosts performance of PHP applications like WordPress. It is recommended to use a caching engine like OpCache when serving PHP pages for a website from Amazon EFS.  OpCache can be configured to store it's cache in memory or on EBS volumes. 
 
+To learn more about OpCache, please read http://php.net/manual/en/book.opcache.php
 
 ## Master Template
 The master template receives all input parameters and passes them to the appropriate nested template which are executed in order based on conditions and dependencies.
