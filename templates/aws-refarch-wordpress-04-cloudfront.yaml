@@ -25,7 +25,7 @@ Parameters:
 
   CloudFrontAcmCertificate:
     AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
-    Description: '[ Optional ] The AWS Certification Manager Certificate ARN of certificate for the CloudFront distribution - this certificate should be created in the us-east-1 (N. Virginia) region.'
+    Description: '[ Optional ] The AWS Certification Manager certificate ARN for the CloudFront distribution certificate - this certificate should be created in the us-east-1 (N. Virginia) region and must reference the WordPress domain name you use below.'
     Type: String
   PublicAlbDnsName:
     Description: The public application load balancer dns name.

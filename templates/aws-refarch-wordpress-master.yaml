@@ -91,7 +91,7 @@ Parameters:
 
   CloudFrontAcmCertificate:
     AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
-    Description: '[ Optional ] The AWS Certification Manager Certificate ARN of certificate for the CloudFront distribution - this certificate should be created in the us-east-1 (N. Virginia) region and must reference the WordPress domain name you use below.'
+    Description: '[ Optional ] The AWS Certification Manager certificate ARN for the CloudFront distribution certificate - this certificate should be created in the us-east-1 (N. Virginia) region and must reference the WordPress domain name you use below.'
     Type: String
   DatabaseInstanceType:
     AllowedValues:
@@ -155,7 +155,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
   PublicAlbAcmCertificate:
     AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
-    Description: '[ Optional ] The AWS Certification Manager Certificate ARN of certificate for the ALB - this certificate should be created in the region you wish to run the ALB and must reference the WordPress domain name you use below.'
+    Description: '[ Optional ] The AWS Certification Manager certificate ARN for the ALB certificate - this certificate should be created in the region you wish to run the ALB and must reference the WordPress domain name you use below.'
     Type: String
   SshAccessCidr:
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
