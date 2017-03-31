@@ -186,5 +186,7 @@ If you found yourself wishing this set of frequently asked questions had an answ
 ## License
 
 This reference architecture sample is licensed under Apache 2.0.
+
 WordPress is licensed under the General Public License (GPLv2 or later) from the Free Software Foundation.
+
 OpCache is licensed under PHP License, version 3.01.
