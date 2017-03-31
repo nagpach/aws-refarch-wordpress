@@ -1,5 +1,5 @@
 ---
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: 2010-09-09
 
 Description: Stack to deploy a highly available, elastic, scalable WordPress environment. This master stack launches multiple nested stacks for different tiers. !! This can only be run in certain AWS Regions - 'us-east-1', 'us-east-2', 'us-west-2', 'eu-west-1'.
 
@@ -392,7 +392,7 @@ Resources:
         DnsEndpoint:
           !If [ DeployCloudFront, !GetAtt [ cloudfront, Outputs.DnsEndpoint ], !GetAtt [ publicalb, Outputs.PublicAlbDnsName ] ]
         DnsHostId:
-          !If [ DeployCloudFront, "Z2FDTNDATAQYW2", !GetAtt [ publicalb, Outputs.PublicAlbCanonicalHostedZoneId ] ]
+          !If [ DeployCloudFront, 'Z2FDTNDATAQYW2', !GetAtt [ publicalb, Outputs.PublicAlbCanonicalHostedZoneId ] ]
         WPDomainName:
           !Ref WPDomainName
       TemplateURL: https://s3.amazonaws.com/aws-us-east-1/reference-architecture/wordpress/latest/templates/aws-refarch-wordpress-05-route53.yaml
@@ -465,12 +465,12 @@ Outputs:
 
   StackStatus:
     Description: Master Stack Status
-    Value: !If [ AvailableAWSRegion, !Join [ '', [ "Stack created in an available region: ", !Ref 'AWS::Region' ] ], "!!ERROR!!! - Nothing to do! - unavailable AWS Region. You must create this stack in an available AWS Region: 'us-east-1', 'us-east-2', 'us-west-2', 'eu-west-1'." ]
+    Value: !If [ AvailableAWSRegion, !Join [ '', [ 'Stack created in an available region: ', !Ref 'AWS::Region' ] ], "!!ERROR!!! - Nothing to do! - unavailable AWS Region. You must create this stack in an available AWS Region: 'us-east-1', 'us-east-2', 'us-west-2', 'eu-west-1', 'ap-southeast-2'." ]
   WPSiteUrl:
     Description: The URL of the WordPress site
-    Value: !If [ CreateRecordSet, !Join [ '', [ "http://www.", !Ref WPDomainName ] ], !If [ DeployCloudFront, !GetAtt [ cloudfront, Outputs.DnsHostname ], !GetAtt [ publicalb, Outputs.PublicAlbHostname ] ] ]
+    Value: !If [ CreateRecordSet, !Join [ '', [ 'http://www.', !Ref WPDomainName ] ], !If [ DeployCloudFront, !GetAtt [ cloudfront, Outputs.DnsHostname ], !GetAtt [ publicalb, Outputs.PublicAlbHostname ] ] ]
   OpCacheValidationUrl:
     Description: A page to validate OpCache has been enabled for each instance in the ASG. Refresh the page to see the status of each instance in the ASG.
-    Value: !Join [ '', [ !If [ CreateRecordSet, !Join [ '', [ "http://www.", !Ref WPDomainName ] ], !If [ DeployCloudFront, !GetAtt [ cloudfront, Outputs.DnsHostname ], !GetAtt [ publicalb, Outputs.PublicAlbHostname ] ] ], '/opcache-instanceid.php' ] ]
+    Value: !Join [ '', [ !If [ CreateRecordSet, !Join [ '', [ 'http://www.', !Ref WPDomainName ] ], !If [ DeployCloudFront, !GetAtt [ cloudfront, Outputs.DnsHostname ], !GetAtt [ publicalb, Outputs.PublicAlbHostname ] ] ], '/opcache-instanceid.php' ] ]
 
     

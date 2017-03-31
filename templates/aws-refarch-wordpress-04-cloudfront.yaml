@@ -1,5 +1,5 @@
 ---
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: 2010-09-09
 
 Description: Reference Architecture to host WordPress on AWS - Creates CloudFront distribution (if selected)
 

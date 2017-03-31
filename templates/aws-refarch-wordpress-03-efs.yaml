@@ -1,5 +1,5 @@
 ---
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: 2010-09-09
 
 Description: Reference Architecture to host WordPress on AWS - Creates EFS file system
 
@@ -40,14 +40,16 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
 
 Conditions:
-  MoreThan3AZ:
+  
+  MoreThan2AZ:
     !Or [
-      !Equals [ !Ref 'AWS::Region', ap-southeast-2 ],
+      !Equals [ !Ref 'AWS::Region', us-east-1 ],
+      !Equals [ !Ref 'AWS::Region', us-east-2 ],
+      !Equals [ !Ref 'AWS::Region', us-west-2 ],
       !Equals [ !Ref 'AWS::Region', eu-west-1 ],
       !Equals [ !Ref 'AWS::Region', sa-east-1 ],
-      !Equals [ !Ref 'AWS::Region', us-east-1 ],
-      !Equals [ !Ref 'AWS::Region', us-west-2 ],
-      !Equals [ !Ref 'AWS::Region', us-east-2 ]
+      !Equals [ !Ref 'AWS::Region', ap-northeast-1 ],
+      !Equals [ !Ref 'AWS::Region', ap-southeast-2 ]
     ]
 
 Resources:
@@ -74,7 +76,7 @@ Resources:
       - !Ref EfsSecurityGroup
       SubnetId: !Ref DataSubnet1
   ElasticFileSystemMountTarget2:
-    Condition: MoreThan3AZ
+    Condition: MoreThan2AZ
     Type: AWS::EFS::MountTarget
     Properties:
       FileSystemId: !Ref ElasticFileSystem
