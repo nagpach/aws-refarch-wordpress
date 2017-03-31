@@ -128,26 +128,26 @@ You can adjust the CIDR ranges used in this section of the [aws-refarch-wordpres
 ```
 Mappings:
   SubnetConfig:
-    VPC:
-      "CIDR": "10.0.0.0/16"
+    Vpc:
+      CIDR: 10.0.0.0/16
     WebSubnet0:
-      "CIDR": "10.0.0.0/22"
+      CIDR: 10.0.0.0/22
     WebSubnet1:
-      "CIDR": "10.0.4.0/22"
+      CIDR: 10.0.4.0/22
     WebSubnet2:
-      "CIDR": "10.0.8.0/22"
+      CIDR: 10.0.8.0/22
     DataSubnet0:
-      "CIDR": "10.0.12.0/22"
+      CIDR: 10.0.12.0/22
     DataSubnet1:
-      "CIDR": "10.0.16.0/22"
+      CIDR: 10.0.16.0/22
     DataSubnet2:
-      "CIDR": "10.0.20.0/22"
+      CIDR: 10.0.20.0/22
     PublicSubnet0:
-      "CIDR": "10.0.250.0/23"
+      CIDR: 10.0.250.0/23
     PublicSubnet1:
-      "CIDR": "10.0.252.0/23"
+      CIDR: 10.0.252.0/23
     PublicSubnet2:
-      "CIDR": "10.0.254.0/23"
+      CIDR: 10.0.254.0/23
 ```
 
 ## Security Groups Template
@@ -186,3 +186,5 @@ If you found yourself wishing this set of frequently asked questions had an answ
 ## License
 
 This reference architecture sample is licensed under Apache 2.0.
+WordPress is licensed under the General Public License (GPLv2 or later) from the Free Software Foundation.
+OpCache is licensed under PHP License, version 3.01.
