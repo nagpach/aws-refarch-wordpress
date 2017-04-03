@@ -334,7 +334,7 @@ Resources:
             - build_cacheclient
             - build_wordpress
             - build_opcache
-            #- install_cacheclient
+            - install_cacheclient
             - install_wordpress
             - install_opcache
             - start_webserver
@@ -384,7 +384,11 @@ Resources:
                   aws s3 cp 's3://aws-us-east-1/reference-architecture/wordpress/latest/bits/AmazonElastiCacheClusterClient-2.0.1-PHP70-64bit.tar.gz' /tmp/.
                   tar -xf '/tmp/AmazonElastiCacheClusterClient-2.0.1-PHP70-64bit.tar.gz'
                   cp '/tmp/artifact/amazon-elasticache-cluster-client.so' /usr/lib64/php/7.0/modules/
-                  sed -i '3i extension=amazon-elasticache-cluster-client.so;' /etc/php.ini
+                  if [ ! -f /etc/php-7.0.d/50-memcached.ini ]; then
+                      touch /etc/php-7.0.d/50-memcached.ini
+                  fi
+                  sed -i '3i extension=/usr/lib64/php/7.0/modules/amazon-elasticache-cluster-client.so;' /etc/php-7.0.d/50-memcached.ini
+                  sed -i '3i extension=igbinary.so;' /etc/php-7.0.d/50-memcached.ini
               mode: 000500
               owner: root
               group: root
